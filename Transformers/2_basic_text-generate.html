@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generando texto</title>
+
+    <script type="module">
+        import { pipeline } from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.0.1";
+
+        const generator = await pipeline("text-generation", "Xenova/distilgpt2");
+
+        console.log('Pipeline cargado:', generator);
+
+        const txt = document.getElementById('text');
+        const out = document.getElementById('result');
+        const btn = document.getElementById('btn');
+
+        btn.addEventListener('click', async () => {
+
+            console.log('Generando texto:', txt.value);
+            const result = await generator(txt.value);
+            console.log('Texto generado:', result);
+
+            out.value += JSON.stringify(result, null, 2);
+
+
+        });
+    </script>
+</head>
+
+<body>
+    <textarea name="text" style="width: 50%;min-height: 200px;" id="text">The future of AI in the browser is</textarea>
+    <textarea name="result" style="width: 50%;min-height: 200px;" id="result"></textarea>
+    <button id="btn">Generar</button>
+
+    <div style="position: absolute;bottom: 20px;">
+        <a href="../Index.html">Volver al índice</a>
+    </div>
+</body>
+
+</html>
